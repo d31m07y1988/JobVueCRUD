@@ -19,4 +19,8 @@ public interface CompanyService {
     List<Company> getByName(String companyName);
 
     List<Company> getAll();
+
+    Integer totalCount();
+
+    List<Company> getAllByPage(int page, int perPage);
 }

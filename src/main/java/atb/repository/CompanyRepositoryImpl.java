@@ -56,4 +56,16 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Company", Company.class).list();
     }
+
+    @Override
+    public Integer totalCount() {
+        Session session = sessionFactory.getCurrentSession();
+        return ((Long)session.createQuery("select count(*) from Company").uniqueResult()).intValue();
+    }
+
+    @Override
+    public List<Company> getAllByPage(int offsetData, int limitData) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Company", Company.class).setFirstResult(offsetData).setMaxResults(limitData).getResultList();
+    }
 }

@@ -41,4 +41,14 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> getAll() {
         return repository.getAll();
     }
+
+    @Override
+    public Integer totalCount() {
+        return repository.totalCount();
+    }
+
+    @Override
+    public List<Company> getAllByPage(int page, int perPage) {
+        return repository.getAllByPage((page-1)*perPage, perPage);
+    }
 }

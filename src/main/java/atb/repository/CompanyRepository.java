@@ -18,4 +18,8 @@ public interface CompanyRepository {
     List<Company> getByName(String companyName);
 
     List<Company> getAll();
+
+    Integer totalCount();
+
+    List<Company> getAllByPage(int offsetData, int limitData);
 }

@@ -1,6 +1,6 @@
 package atb.controller;
 
-import atb.model.Company;
+import atb.dto.tableDataDTO;
 import atb.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
@@ -17,8 +17,9 @@ public class CompaniesAjaxController {
     private CompanyService companyService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public List<Company> getAll() {
-        return companyService.getAll();
+    public tableDataDTO getAll(@RequestParam(value = "page", required = true) int page,
+                               @RequestParam(value = "per_page", required = true) int perPage) {
+        return new tableDataDTO(companyService.getAllByPage(page,perPage),companyService.totalCount());
     }
 
 }
