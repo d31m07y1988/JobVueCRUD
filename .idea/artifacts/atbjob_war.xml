@@ -1,0 +1,8 @@
+<component name="ArtifactManager">
+  <artifact type="war" name="atbjob:war">
+    <output-path>$PROJECT_DIR$/target</output-path>
+    <root id="archive" name="atbjob.war">
+      <element id="artifact" artifact-name="atbjob:war exploded" />
+    </root>
+  </artifact>
+</component>
