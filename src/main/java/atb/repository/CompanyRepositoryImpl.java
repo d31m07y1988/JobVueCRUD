@@ -68,4 +68,10 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Company", Company.class).setFirstResult(offsetData).setMaxResults(limitData).getResultList();
     }
+
+    @Override
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(get(id));
+    }
 }

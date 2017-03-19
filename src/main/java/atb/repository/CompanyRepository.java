@@ -22,4 +22,6 @@ public interface CompanyRepository {
     Integer totalCount();
 
     List<Company> getAllByPage(int offsetData, int limitData);
+
+    void delete(int id);
 }

@@ -17,10 +17,14 @@ public class CompaniesAjaxController {
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
     public DataTableDTO getAll(@RequestParam(value = "page", required = false) int page,
-                               @RequestParam(value = "per_page", required = false) int per_page) {
+                                @RequestParam(value = "per_page", required = false) int per_page) {
         Integer total = companyService.totalCount();
         Pagination pagination = new Pagination(total, per_page, page);
         return new DataTableDTO(pagination, companyService.getAllByPage(page,per_page));
     }
 
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") int id) {
+        companyService.delete(id);
+    }
 }

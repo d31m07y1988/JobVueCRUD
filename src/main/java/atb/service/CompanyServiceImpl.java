@@ -51,4 +51,9 @@ public class CompanyServiceImpl implements CompanyService {
     public List<Company> getAllByPage(int page, int perPage) {
         return repository.getAllByPage((page-1)*perPage, perPage);
     }
+
+    @Override
+    public void delete(int id) {
+        repository.delete(id);
+    }
 }

@@ -7,40 +7,68 @@
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
     <link rel="stylesheet" href="resources/job.css">
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
 </head>
 <body>
 
 <div class="ui container segment" id="app">
 
     <div class="ui pointing menu">
-        <a class="item" v-bind:class="menuNum=='m2'?'active':''" @click="makeActive('Организации','m2')" href="#">
+        <a class="item" v-bind:class="menu=='company'?'active':''" @click="makeActive('company')" href="#">
             Организации
         </a>
-        <a class="item" v-bind:class="menuNum=='m3'?'active':''" @click="makeActive('Физические лица','m3')" href="#">
+        <a class="item" v-bind:class="menu=='person'?'active':''" @click="makeActive('person')" href="#">
             Физические лица
         </a>
-        <a class="item" v-bind:class="menuNum=='m4'?'active':''" @click="makeActive('Место работы','m4')" href="#">
+        <a class="item" v-bind:class="menu=='job'?'active':''" @click="makeActive('job')" href="#">
             Место работы
         </a>
     </div>
 
     <div class="ui segment">
-        <h2 class="ui header">{{ topic }}</h2>
+        <template id="company-template">
+            <h2 class="ui header">Организации</h2>
+            <vuetable
+                    :api-url="dataget"
+                    :fields="columns"
+                    :item-actions="rowactions"
+                    :per-page="perpage"
+                    pagination-info-template="Показано: {from} - {to} из {total} записей"
+                    pagination-path="pagination"
+            ></vuetable>
+        </template>
+        <template id="person-template">
+            <h2 class="ui header">Физические лица</h2>
+            <vuetable
+                    :api-url="dataget"
+                    :fields="columns"
+                    :item-actions="rowactions"
+                    :per-page="perpage"
+                    pagination-info-template="Показано: {from} - {to} из {total}"
+                    pagination-path="pagination"
+            ></vuetable>
+        </template>
+        <template id="job-template">
+            <h2 class="ui header">Место работы</h2>
+            <vuetable
+                    :api-url="dataget"
+                    :fields="columns"
+                    :item-actions="rowactions"
+                    :per-page="perpage"
+                    pagination-info-template="Показано: {from} - {to} из {total}"
+                    pagination-path="pagination"
+            ></vuetable>
+        </template>
 
-        <div v-if="menuNum">
-                <vuetable
-                        :api-url="dataget"
-                        :fields="columns"
-                        :item-actions="itemActions"
-                        :per-page="perPage"
-                        pagination-info-template="Показано: {from} - {to} из {total} записей"
-                        pagination-path="pagination"
-                ></vuetable>
-        </div>
+        <component :is="menu"
+                   :columns="columns"
+                   :dataget="dataget"
+                   :rowactions="itemActions"
+                   :perpage="perPage"></component>
 
     </div>
 </div>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 <script src="https://cdn.jsdelivr.net/vue/1.0.28/vue.js"></script>
 <script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
 <script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.min.js"></script>
