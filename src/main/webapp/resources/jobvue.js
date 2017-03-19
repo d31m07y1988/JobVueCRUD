@@ -8,11 +8,14 @@ var demo = new Vue({
     data: {
         topic: '',
         menuNum: '',
+        dataget: [],
         columns: [],
+        itemActions: [
+            { name: 'edit-item', label: '', icon: 'large edit icon', class: 'ui mini icon button'},
+            { name: 'delete-item', label: '', icon: 'large delete icon', class: 'ui mini icon button' }
+        ],
         dataTable: [],
-        totalDataTable: 0,
-        perPage: 10,
-        currentPage: 1
+        perPage: 10
     },
 
     // Functions we will be using.
@@ -22,13 +25,25 @@ var demo = new Vue({
             this.menuNum = num;
             switch (num) {
                 case 'm2':
-                    this.fetchCompanies(this.currentPage);
+                    this.dataget = 'ajax/companies';
+                    this.columns = [
+                        {name: 'id'},
+                        {name: 'name', title: 'Название'},
+                        {name: 'inn', title: 'ИНН'},
+                        {name: '__actions'}
+                    ];
                     break;
                 case 'm3':
-                    this.fetchPersons();
+                    this.dataget = 'ajax/persons';
+                    this.columns = [
+                        {name: 'id'},
+                        {name: 'fullname', title: 'ФИО'},
+                        {name: 'phone', title: 'Телефон'},
+                        {name: 'email'}
+                    ];
                     break;
                 case 'm4':
-                    this.fetchJob();
+                    this.dataget = 'ajax/jobs';
                     break;
             }
         },
@@ -43,8 +58,6 @@ var demo = new Vue({
             this.$http.get('ajax/companies', options).then(function(response) {
 
                 this.dataTable = response.data
-/*                this.totalDataTable = this.persons.length
-                this.currentPage = page*/
             }, console.log)
         },
         fetchPersons: function() {
@@ -56,6 +69,20 @@ var demo = new Vue({
             this.$http.get('ajax/job').then(function(response) {
                 this.dataTable = response.data
             }, console.log)
+        },
+        viewProfile: function(id) {
+            console.log('view profile with id:', id)
+        }
+    },
+    events: {
+        'vuetable:action': function(action, data) {
+            console.log('vuetable:action', action, data)
+            if (action == 'view-item') {
+                this.viewProfile(data.id)
+            }
+        },
+        'vuetable:load-error': function(response) {
+            console.log('Load Error: ', response)
         }
     },
 

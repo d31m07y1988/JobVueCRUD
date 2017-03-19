@@ -56,4 +56,16 @@ public class JobRepositoryImpl implements JobRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Job", Job.class).list();
     }
+
+    @Override
+    public List<Job> getAllByPage(int offsetData, int limitData) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Job", Job.class).setFirstResult(offsetData).setMaxResults(limitData).getResultList();
+    }
+
+    @Override
+    public Integer totalCount() {
+        Session session = sessionFactory.getCurrentSession();
+        return ((Long)session.createQuery("select count(*) from Job").uniqueResult()).intValue();
+    }
 }

@@ -17,4 +17,8 @@ public interface JobService {
     List<Job> getByCompany(Integer companyId);
 
     List<Job> getAll();
+
+    List<Job> getAllByPage(int page, int per_page);
+
+    Integer totalCount();
 }

@@ -40,4 +40,14 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> getAll() {
         return repository.getAll();
     }
+
+    @Override
+    public Integer totalCount() {
+        return repository.totalCount();
+    }
+
+    @Override
+    public List<Person> getAllByPage(int page, int per_page) {
+        return repository.getAllByPage((page-1)*per_page, per_page);
+    }
 }

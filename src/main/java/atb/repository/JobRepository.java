@@ -21,4 +21,8 @@ public interface JobRepository {
     List<Job> getByCompany(Company company);
 
     List<Job> getAll();
+
+    List<Job> getAllByPage(int offsetData, int limitData);
+
+    Integer totalCount();
 }

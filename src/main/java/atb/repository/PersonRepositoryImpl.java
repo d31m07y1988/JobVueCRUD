@@ -55,4 +55,16 @@ public class PersonRepositoryImpl implements PersonRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Person", Person.class).list();
     }
+
+    @Override
+    public Integer totalCount() {
+        Session session = sessionFactory.getCurrentSession();
+        return ((Long)session.createQuery("select count(*) from Person").uniqueResult()).intValue();
+    }
+
+    @Override
+    public List<Person> getAllByPage(int offsetData, int limitData) {
+        Session session = sessionFactory.getCurrentSession();
+        return session.createQuery("from Person", Person.class).setFirstResult(offsetData).setMaxResults(limitData).getResultList();
+    }
 }

@@ -19,4 +19,8 @@ public interface PersonService {
     List<Person> getByName(String name);
 
     List<Person> getAll();
+
+    Integer totalCount();
+
+    List<Person> getAllByPage(int page, int per_page);
 }

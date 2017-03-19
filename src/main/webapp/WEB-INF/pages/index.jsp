@@ -5,42 +5,46 @@
 <head>
     <title>Job </title>
     <meta http-equiv="Content-Type" content="text/html; charset=UTF-8">
-    <link href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <link rel="stylesheet" href="resources/job.css">
+    <link rel="stylesheet" href="https://cdn.jsdelivr.net/semantic-ui/2.2.9/semantic.min.css">
 </head>
 <body>
 
-<div class="container brd" id="app">
-    <b-nav tabs>
-<%--
-        <b-nav-item link="#" v-bind:class="menuNum=='m1'?'active':''" @click="makeActive('Главная','m1')">Главная</b-nav-item>
---%>
-        <b-nav-item link="#" v-bind:class="menuNum=='m2'?'active':''" @click="makeActive('Организации','m2')">Организации</b-nav-item>
-        <b-nav-item link="#" v-bind:class="menuNum=='m3'?'active':''" @click="makeActive('Физические лица','m3')">Физические лица</b-nav-item>
-        <b-nav-item link="#" v-bind:class="menuNum=='m4'?'active':''" @click="makeActive('Место работы','m4')">Место работы</b-nav-item>
-    </b-nav>
+<div class="ui container segment" id="app">
 
-    <div class="panel panel-default brd">
-        <div class="panel-heading">{{ topic }}</div>
-        <div class="panel-body">
-            Panel Content
-<br>
-
-            {{dataTable}}
-
-        </div>
+    <div class="ui pointing menu">
+        <a class="item" v-bind:class="menuNum=='m2'?'active':''" @click="makeActive('Организации','m2')" href="#">
+            Организации
+        </a>
+        <a class="item" v-bind:class="menuNum=='m3'?'active':''" @click="makeActive('Физические лица','m3')" href="#">
+            Физические лица
+        </a>
+        <a class="item" v-bind:class="menuNum=='m4'?'active':''" @click="makeActive('Место работы','m4')" href="#">
+            Место работы
+        </a>
     </div>
 
+    <div class="ui segment">
+        <h2 class="ui header">{{ topic }}</h2>
 
-    <b-button>
-        <span class="glyphicon glyphicon-trash"></span>
-    </b-button>
+        <div v-if="menuNum">
+                <vuetable
+                        :api-url="dataget"
+                        :fields="columns"
+                        :item-actions="itemActions"
+                        :per-page="perPage"
+                        pagination-info-template="Показано: {from} - {to} из {total} записей"
+                        pagination-path="pagination"
+                ></vuetable>
+        </div>
+
+    </div>
 </div>
-    <script src="resources/require.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue/2.2.4/vue.js"></script>
-    <script src="https://unpkg.com/bootstrap-vue/dist/bootstrap-vue.js"></script>
-    <script src="https://cdnjs.cloudflare.com/ajax/libs/vue-resource/1.2.1/vue-resource.min.js"></script>
-    <script src="resources/jobvue.js"></script>
+
+<script src="https://cdn.jsdelivr.net/vue/1.0.28/vue.js"></script>
+<script src="https://cdn.jsdelivr.net/vue.resource/1.0.3/vue-resource.min.js"></script>
+<script type="text/javascript" src="http://cdn.jsdelivr.net/vue.table/1.5.3/vue-table.min.js"></script>
+<script src="resources/jobvue.js"></script>
 
 </body>
 </html>

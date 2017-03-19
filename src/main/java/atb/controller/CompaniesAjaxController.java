@@ -1,12 +1,11 @@
 package atb.controller;
 
-import atb.dto.tableDataDTO;
+import atb.dto.Pagination;
+import atb.dto.DataTableDTO;
 import atb.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
-
-import java.util.List;
 
 
 @RestController
@@ -17,9 +16,11 @@ public class CompaniesAjaxController {
     private CompanyService companyService;
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public tableDataDTO getAll(@RequestParam(value = "page", required = true) int page,
-                               @RequestParam(value = "per_page", required = true) int perPage) {
-        return new tableDataDTO(companyService.getAllByPage(page,perPage),companyService.totalCount());
+    public DataTableDTO getAll(@RequestParam(value = "page", required = false) int page,
+                               @RequestParam(value = "per_page", required = false) int per_page) {
+        Integer total = companyService.totalCount();
+        Pagination pagination = new Pagination(total, per_page, page);
+        return new DataTableDTO(pagination, companyService.getAllByPage(page,per_page));
     }
 
 }
