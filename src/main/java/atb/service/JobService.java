@@ -21,4 +21,6 @@ public interface JobService {
     List<Job> getAllByPage(int page, int per_page);
 
     Integer totalCount();
+
+    void delete(int id);
 }

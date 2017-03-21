@@ -67,4 +67,10 @@ public class PersonRepositoryImpl implements PersonRepository {
         Session session = sessionFactory.getCurrentSession();
         return session.createQuery("from Person", Person.class).setFirstResult(offsetData).setMaxResults(limitData).getResultList();
     }
+
+    @Override
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(get(id));
+    }
 }

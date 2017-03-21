@@ -1,5 +1,7 @@
 package atb.model;
 
+import org.hibernate.validator.constraints.NotEmpty;
+
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -10,26 +12,32 @@ public class Job {
     @Id
     @SequenceGenerator(name = "job_seq", sequenceName = "job_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "job_seq")
-    private int id;
+    private Integer id;
 
     @ManyToOne
     @JoinColumn(name = "persons_id", nullable = false)
+    @NotEmpty
     private Person person;
 
     @ManyToOne
     @JoinColumn(name = "companies_id", nullable = false)
+    @NotEmpty
     private Company company;
 
     @Column(name = "date_start", nullable = false)
+    @NotEmpty
     private LocalDate date_start;
 
     @Column(name = "date_end", nullable = false)
+    @NotEmpty
     private LocalDate date_end;
 
     @Column(name = "manager", nullable = false)
+    @NotEmpty
     private boolean manager;
 
     @Column(name = "salary", nullable = false)
+    @NotEmpty
     private Double salary;
 
     public Job() {
@@ -44,7 +52,7 @@ public class Job {
         this.salary = salary;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

@@ -19,6 +19,7 @@ public class CompanyServiceImpl implements CompanyService {
 
     @Override
     public Company save(Company company) {
+        company.setId(null);
         return repository.save(company);
     }
 

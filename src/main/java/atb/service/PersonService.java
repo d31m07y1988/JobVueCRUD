@@ -23,4 +23,6 @@ public interface PersonService {
     Integer totalCount();
 
     List<Person> getAllByPage(int page, int per_page);
+
+    void delete(int id);
 }

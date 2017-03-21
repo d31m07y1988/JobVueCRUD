@@ -22,4 +22,6 @@ public interface PersonRepository {
     Integer totalCount();
 
     List<Person> getAllByPage(int offsetData, int limitData);
+
+    void delete(int id);
 }

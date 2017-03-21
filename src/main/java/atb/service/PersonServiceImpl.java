@@ -50,4 +50,9 @@ public class PersonServiceImpl implements PersonService {
     public List<Person> getAllByPage(int page, int per_page) {
         return repository.getAllByPage((page-1)*per_page, per_page);
     }
+
+    @Override
+    public void delete(int id) {
+        repository.delete(id);
+    }
 }

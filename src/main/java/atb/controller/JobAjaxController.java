@@ -6,10 +6,7 @@ import atb.model.Job;
 import atb.service.JobService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -23,11 +20,20 @@ public class JobAjaxController {
 
 
     @RequestMapping(method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
-    public DataTableDTO getAll(@RequestParam(value = "page", required = false) int page,
-                               @RequestParam(value = "per_page", required = false) int per_page) {
+    public DataTableDTO getAll(@RequestParam(value = "page", required = false) Integer page,
+                               @RequestParam(value = "per_page", required = false) Integer per_page) {
         Integer total = jobService.totalCount();
+        if(page==null && per_page==null) {
+            page = 1;
+            per_page=total;
+        }
         Pagination pagination = new Pagination(total, per_page, page);
         return new DataTableDTO(pagination, jobService.getAllByPage(page,per_page));
+    }
+
+    @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
+    public void delete(@PathVariable("id") int id) {
+        jobService.delete(id);
     }
 
 }

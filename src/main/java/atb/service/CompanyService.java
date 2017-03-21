@@ -25,4 +25,5 @@ public interface CompanyService {
     List<Company> getAllByPage(int page, int perPage);
 
     void delete(int id);
+
 }

@@ -25,6 +25,8 @@ public class CompanyRepositoryImpl implements CompanyRepository {
     public Company save(Company company) {
         Session session = sessionFactory.getCurrentSession();
         Serializable saved = session.save(company);
+        System.out.println("-----\n\n save servise -----\n\n");
+
         return get((int)saved);
     }
 

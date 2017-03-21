@@ -1,4 +1,4 @@
-var demo = new Vue({
+var vm = new Vue({
 
     // A DOM element to mount our view model.
     el: '#app',
@@ -24,7 +24,7 @@ var demo = new Vue({
              perpage: Number
           },
           template: '#company-template'
-      }, 
+      },
       person: {
           props:{
               dataget: String,
@@ -45,7 +45,11 @@ var demo = new Vue({
           methods: {
               dateformat:function(val) {
                   return new Date(val).toLocaleDateString("ru")
+              },
+              managerformat: function (val) {
+                  return val? 'да':'нет'
               }
+
           }
       }
     },
@@ -80,7 +84,7 @@ var demo = new Vue({
                         {name: 'company.name', title: 'Компания'},
                         {name: 'date_start', title: 'Дата приема',callback: 'dateformat'},
                         {name: 'date_end', title: 'Дата увольнения',callback: 'dateformat'},
-                        {name: 'manager', title: 'Руководитель'},
+                        {name: 'manager', title: 'Руководитель', callback: 'managerformat'},
                         {name: 'salary', title: 'Зарплата'},
                         {name: '__actions'}
                     ];
@@ -100,21 +104,19 @@ var demo = new Vue({
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    confirmButtonText: "Удалить запись!",
-                    cancelButtonText: "Отменить!",
+                    confirmButtonText: "Удалить!",
+                    cancelButtonText: "Отменить",
                     closeOnConfirm: false
                 },
-                function(){
-                    this.$http.delete(dataget +"/" + message.id)
-                        .success(function(response) {
-                            console.log(response);
-                        })
-                        .error(function(errors) {
-                            console.log(errors);
-                        });
-                    swal("Deleted!", "Строка была удалена", "success");
-                });
-            console.log('edit row with id:', id)
+                function (){
+                    vm.$http.delete(vm.dataget +"/" + id)
+                    swal({
+                        title: "Строка была удалена",
+                        type: "success"},
+                    function () {
+                        vm.$broadcast('vuetable:reload')
+                    });
+                })
         }
     },
     events: {
@@ -137,3 +139,98 @@ var demo = new Vue({
         this.makeActive('company');
     }
 });
+
+$.fn.form.settings.rules.isINN = function(i) {
+    if (i=="" || i.match(/\D/) ) return false;
+
+    var inn = i.match(/(\d)/g);
+
+    if ( inn.length == 10 )
+    {
+        return inn[9] == String(((
+                    2*inn[0] + 4*inn[1] + 10*inn[2] +
+                    3*inn[3] + 5*inn[4] +  9*inn[5] +
+                    4*inn[6] + 6*inn[7] +  8*inn[8]
+                ) % 11) % 10);
+    }
+    else if ( inn.length == 12 )
+    {
+        return inn[10] == String(((
+                    7*inn[0] + 2*inn[1] + 4*inn[2] +
+                    10*inn[3] + 3*inn[4] + 5*inn[5] +
+                    9*inn[6] + 4*inn[7] + 6*inn[8] +
+                    8*inn[9]
+                ) % 11) % 10) && inn[11] == String(((
+                    3*inn[0] +  7*inn[1] + 2*inn[2] +
+                    4*inn[3] + 10*inn[4] + 3*inn[5] +
+                    5*inn[6] +  9*inn[7] + 4*inn[8] +
+                    6*inn[9] +  8*inn[10]
+                ) % 11) % 10);
+    }
+
+    return false;
+};
+
+$('#company-modal')
+    .modal({
+        onApprove : function() {
+            $('#theform').submit(function (e) {
+                e.preventDefault()
+                let formData = {
+                    id: $('[name=id]').val(),
+                    name: $('[name=name]').val(),
+                    inn: $('[name=inn]').val()
+                }
+                vm.$http.post('/ajax/companies', formData).then(function (response) {
+                    // success
+                    swal({
+                            title: "Добавлена запись",
+                            type: "success"
+                        },
+                        function () {
+                            vm.$broadcast('vuetable:reload')
+                            $('#company-modal').modal('hide');
+                        });
+                }, function (response) {
+                    // error
+                    sweetAlert("Ошибка", "ошибка добавления записи", "error");
+                    console.log('ошибка добавления записи ' + formData)
+                });
+            });
+            return false;
+        }
+    })
+    .modal('attach events', '#addBtn', 'show')
+;
+
+
+$('#company-modal form')
+    .form({
+        fields: {
+            name: {
+                identifier: 'name',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Введите название компании'
+                    }
+                ]
+            },
+            inn: {
+                identifier: 'inn',
+                rules: [
+                    {
+                        type   : 'empty',
+                        prompt : 'Введите ИНН'
+                    },
+                    {
+                        type: 'isINN',
+                        prompt: 'ИНН не корректно введен'
+                    }
+                ]
+            }
+        }
+    },{
+        inline : false,
+        on: 'blur'
+    });

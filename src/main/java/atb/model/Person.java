@@ -11,7 +11,7 @@ public class Person {
     @Id
     @SequenceGenerator(name = "persons_seq", sequenceName = "persons_seq", allocationSize = 1)
     @GeneratedValue(strategy = GenerationType.SEQUENCE, generator = "persons_seq")
-    private int id;
+    private Integer id;
 
     @Column(name = "fullname", nullable = false)
     private String fullname;
@@ -33,7 +33,7 @@ public class Person {
         this.email = email;
     }
 
-    public int getId() {
+    public Integer getId() {
         return id;
     }
 

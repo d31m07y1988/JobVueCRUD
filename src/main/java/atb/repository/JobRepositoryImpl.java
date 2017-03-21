@@ -68,4 +68,10 @@ public class JobRepositoryImpl implements JobRepository {
         Session session = sessionFactory.getCurrentSession();
         return ((Long)session.createQuery("select count(*) from Job").uniqueResult()).intValue();
     }
+
+    @Override
+    public void delete(int id) {
+        Session session = sessionFactory.getCurrentSession();
+        session.delete(get(id));
+    }
 }

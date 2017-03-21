@@ -63,4 +63,9 @@ public class JobServiceImpl implements JobService {
     public Integer totalCount() {
         return repository.totalCount();
     }
+
+    @Override
+    public void delete(int id) {
+        repository.delete(id);
+    }
 }

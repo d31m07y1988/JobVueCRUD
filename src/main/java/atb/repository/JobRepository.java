@@ -25,4 +25,6 @@ public interface JobRepository {
     List<Job> getAllByPage(int offsetData, int limitData);
 
     Integer totalCount();
+
+    void delete(int id);
 }
