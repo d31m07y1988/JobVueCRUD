@@ -1,9 +1,8 @@
 package atb.model;
 
 import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "persons")
@@ -17,11 +16,12 @@ public class Person {
     private String fullname;
 
     @Column(name = "phone", nullable = false)
+    @Pattern(regexp = "^((8|0|((\\+|00)\\d{1,2}))[\\- ]?)?(\\(?\\d{3}\\)?[\\- ]?)?[\\d\\- ]{7,10}$",
+            message = "телефон введен не корректно")
     private String phone;
 
     @Column(name = "email", nullable = false, unique = true)
     @Email
-    @NotEmpty
     private String email;
 
     public Person() {
@@ -37,7 +37,7 @@ public class Person {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -46,7 +46,7 @@ public class Person {
     }
 
     public void setFullname(String fullname) {
-        this.fullname = fullname;
+        this.fullname = fullname.trim();
     }
 
     public String getPhone() {
@@ -54,7 +54,7 @@ public class Person {
     }
 
     public void setPhone(String phone) {
-        this.phone = phone;
+        this.phone = phone.trim();
     }
 
     public String getEmail() {
@@ -62,6 +62,10 @@ public class Person {
     }
 
     public void setEmail(String email) {
-        this.email = email;
+        this.email = email.trim().toLowerCase();
+    }
+
+    public boolean isNew() {
+        return this.id==null || this.id==0;
     }
 }

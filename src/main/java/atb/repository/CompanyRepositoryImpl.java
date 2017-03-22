@@ -76,4 +76,10 @@ public class CompanyRepositoryImpl implements CompanyRepository {
         Session session = sessionFactory.getCurrentSession();
         session.delete(get(id));
     }
+
+    @Override
+    public void update(Company company) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(company);
+    }
 }

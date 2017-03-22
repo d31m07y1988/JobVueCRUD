@@ -1,14 +1,13 @@
 package atb.controller;
 
-import atb.dto.Pagination;
 import atb.dto.DataTableDTO;
+import atb.dto.DropdownCompanyDTO;
 import atb.model.Company;
 import atb.service.CompanyService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.MediaType;
 import org.springframework.web.bind.annotation.*;
 
-import javax.servlet.http.HttpServletRequest;
 import javax.validation.Valid;
 
 
@@ -27,8 +26,7 @@ public class CompaniesAjaxController {
             page = 1;
             per_page=total;
         }
-        Pagination pagination = new Pagination(total, per_page, page);
-        return new DataTableDTO(pagination, companyService.getAllByPage(page,per_page));
+        return new DataTableDTO(companyService.getAllByPage(page,per_page),total, per_page, page);
     }
 
     @RequestMapping(value = "/{id}", method = RequestMethod.DELETE)
@@ -39,14 +37,15 @@ public class CompaniesAjaxController {
     @RequestMapping(method = RequestMethod.POST, consumes = MediaType.APPLICATION_JSON_VALUE)
     public void updateOrCreate(@Valid @RequestBody Company company) {
 
-        System.out.println("-----------------\n\n\n\n");
-        System.out.println(company);
-        System.out.println("\n\n\n\n-----------------");
         if (company.isNew()) {
-            System.out.println("-----\n\n wanna save -----\n\n");
             companyService.save(company);
-        }/* else {
-            companyService.update(company, company.getId());
-        }*/
+        } else {
+            companyService.update(company);
+        }
+    }
+
+    @RequestMapping(value = "/dropdown", method = RequestMethod.GET, produces = MediaType.APPLICATION_JSON_VALUE)
+    public DropdownCompanyDTO getDropdown() {
+       return new DropdownCompanyDTO(companyService.getAll());
     }
 }

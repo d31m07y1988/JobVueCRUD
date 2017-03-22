@@ -18,6 +18,7 @@ public class PersonServiceImpl implements PersonService {
 
     @Override
     public Person save(Person person) {
+        person.setId(null);
         return repository.save(person);
     }
 
@@ -54,5 +55,10 @@ public class PersonServiceImpl implements PersonService {
     @Override
     public void delete(int id) {
         repository.delete(id);
+    }
+
+    @Override
+    public void update(Person person) {
+        repository.update(person);
     }
 }

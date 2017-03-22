@@ -31,6 +31,7 @@ public class JobServiceImpl implements JobService {
 
     @Override
     public Job save(Job job) {
+        job.setId(null);
         return repository.save(job);
     }
 
@@ -67,5 +68,10 @@ public class JobServiceImpl implements JobService {
     @Override
     public void delete(int id) {
         repository.delete(id);
+    }
+
+    @Override
+    public void update(Job job) {
+        repository.update(job);
     }
 }

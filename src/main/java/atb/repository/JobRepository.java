@@ -27,4 +27,6 @@ public interface JobRepository {
     Integer totalCount();
 
     void delete(int id);
+
+    void update(Job job);
 }

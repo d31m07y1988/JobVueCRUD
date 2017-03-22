@@ -73,4 +73,10 @@ public class PersonRepositoryImpl implements PersonRepository {
         Session session = sessionFactory.getCurrentSession();
         session.delete(get(id));
     }
+
+    @Override
+    public void update(Person person) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(person);
+    }
 }

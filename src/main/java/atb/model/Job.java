@@ -1,7 +1,5 @@
 package atb.model;
 
-import org.hibernate.validator.constraints.NotEmpty;
-
 import javax.persistence.*;
 import java.time.LocalDate;
 
@@ -16,31 +14,38 @@ public class Job {
 
     @ManyToOne
     @JoinColumn(name = "persons_id", nullable = false)
-    @NotEmpty
     private Person person;
 
     @ManyToOne
     @JoinColumn(name = "companies_id", nullable = false)
-    @NotEmpty
     private Company company;
 
     @Column(name = "date_start", nullable = false)
-    @NotEmpty
     private LocalDate date_start;
 
     @Column(name = "date_end", nullable = false)
-    @NotEmpty
     private LocalDate date_end;
 
     @Column(name = "manager", nullable = false)
-    @NotEmpty
     private boolean manager;
 
     @Column(name = "salary", nullable = false)
-    @NotEmpty
     private Double salary;
 
     public Job() {
+    }
+
+    @Override
+    public String toString() {
+        return "Job{" +
+                "id=" + id +
+                ", person=" + person +
+                ", company=" + company +
+                ", date_start=" + date_start +
+                ", date_end=" + date_end +
+                ", manager=" + manager +
+                ", salary=" + salary +
+                '}';
     }
 
     public Job(Person person, Company company, LocalDate date_start, LocalDate date_end, boolean manager, Double salary) {
@@ -56,7 +61,7 @@ public class Job {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(Integer id) {
         this.id = id;
     }
 
@@ -106,5 +111,9 @@ public class Job {
 
     public void setSalary(Double salary) {
         this.salary = salary;
+    }
+
+    public boolean isNew() {
+        return this.id==null || this.id==0;
     }
 }

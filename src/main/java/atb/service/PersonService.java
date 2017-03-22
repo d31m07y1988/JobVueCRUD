@@ -25,4 +25,6 @@ public interface PersonService {
     List<Person> getAllByPage(int page, int per_page);
 
     void delete(int id);
+
+    void update(Person person);
 }

@@ -74,4 +74,10 @@ public class JobRepositoryImpl implements JobRepository {
         Session session = sessionFactory.getCurrentSession();
         session.delete(get(id));
     }
+
+    @Override
+    public void update(Job job) {
+        Session session = sessionFactory.getCurrentSession();
+        session.update(job);
+    }
 }

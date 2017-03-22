@@ -45,7 +45,7 @@ public class Company {
     }
 
     public void setInn(String inn) {
-        this.inn = inn;
+        this.inn = inn.trim();
     }
 
     public String getName() {
@@ -53,19 +53,11 @@ public class Company {
     }
 
     public void setName(String name) {
-        this.name = name;
+        this.name = name.trim();
     }
 
     public boolean isNew() {
         return this.id==null || this.id==0;
     }
 
-    @Override
-    public String toString() {
-        return "Company{" +
-                "id=" + id +
-                ", name='" + name + '\'' +
-                ", inn='" + inn + '\'' +
-                '}';
-    }
 }

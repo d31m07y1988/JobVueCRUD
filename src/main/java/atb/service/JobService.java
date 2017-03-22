@@ -1,8 +1,6 @@
 package atb.service;
 
-import atb.model.Company;
 import atb.model.Job;
-import atb.model.Person;
 
 import java.util.List;
 
@@ -23,4 +21,6 @@ public interface JobService {
     Integer totalCount();
 
     void delete(int id);
+
+    void update(Job job);
 }
