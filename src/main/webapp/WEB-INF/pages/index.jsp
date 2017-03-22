@@ -13,24 +13,15 @@
 <body>
 
 <script type="x-template" id="company-template">
-    <h2 class="ui header">Организации</h2>
 
-    <div class="ui grid">
+    <div class="ui grid padded">
         <div class="ui left aligned nine wide column">
-            <div class="ui labeled icon input">
-                <div class="ui label">Search:</div>
-                <input v-model="searchFor" class="ui input" >
-                <i class="search icon"></i>
-            </div>
-            <button class="ui button primary" >Go</button>
-            <button class="ui button" >Reset</button>
-            &nbsp;
+            <h2 class="ui header">Организации</h2>
         </div>
         <div class="ui right aligned seven wide column">
-            <button class="ui button primary" id="addBtn" v-on:click="editRow">Добавить запись</button>
+            <button class="ui button primary" v-on:click="editRow">Добавить запись</button>
         </div>
     </div>
-
     <vuetable
             :api-url="dataget"
             :fields="columns"
@@ -65,17 +56,9 @@
 </script>
 
 <script type="x-template" id="person-template">
-    <h2 class="ui header">Физические лица</h2>
-    <div class="ui grid">
+    <div class="ui grid padded">
         <div class="ui left aligned nine wide column">
-            <div class="ui labeled icon input">
-                <div class="ui label">Search:</div>
-                <input v-model="searchFor" class="ui input" >
-                <i class="search icon"></i>
-            </div>
-            <button class="ui button primary" >Go</button>
-            <button class="ui button" >Reset</button>
-            &nbsp;
+            <h2 class="ui header">Физические лица</h2>
         </div>
         <div class="ui right aligned seven wide column">
             <button class="ui button primary" v-on:click="editRow">Добавить запись</button>
@@ -118,18 +101,9 @@
 </script>
 
 <script type="x-template" id="job-template">
-    <h2 class="ui header">Место работы</h2>
-
-    <div class="ui grid">
+    <div class="ui grid padded">
         <div class="ui left aligned nine wide column">
-            <div class="ui labeled icon input">
-                <div class="ui label">Search:</div>
-                <input v-model="searchFor" class="ui input" >
-                <i class="search icon"></i>
-            </div>
-            <button class="ui button primary" >Go</button>
-            <button class="ui button" >Reset</button>
-            &nbsp;
+            <h2 class="ui header">Место работы</h2>
         </div>
         <div class="ui right aligned seven wide column">
             <button class="ui button primary" v-on:click="editRow">Добавить запись</button>
@@ -208,13 +182,13 @@
 <div class="ui container segment" id="app">
 
     <div class="ui pointing menu">
-        <a class="item" v-bind:class="menu=='company'?'active':''" @click="makeActive('company')" href="#">
+        <a class="item" v-bind:class="menu=='company'?'active':''" @click.prevent="makeActive('company')" href="#">
             Организации
         </a>
-        <a class="item" v-bind:class="menu=='person'?'active':''" @click="makeActive('person')" href="#">
+        <a class="item" v-bind:class="menu=='person'?'active':''" @click.prevent="makeActive('person')" href="#">
             Физические лица
         </a>
-        <a class="item" v-bind:class="menu=='job'?'active':''" @click="makeActive('job')" href="#">
+        <a class="item" v-bind:class="menu=='job'?'active':''" @click.prevent="makeActive('job')" href="#">
             Место работы
         </a>
     </div>

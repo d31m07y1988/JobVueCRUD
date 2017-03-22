@@ -84,9 +84,9 @@ var vm = new Vue({
                 case 'company':
                     this.dataget = 'ajax/companies';
                     this.columns = [
-                        {name: 'id'},
-                        {name: 'name', title: 'Название'},
-                        {name: 'inn', title: 'ИНН'},
+                        {name: 'id', sortField: 'id'},
+                        {name: 'name', title: 'Название', sortField: 'name'},
+                        {name: 'inn', title: 'ИНН', sortField: 'inn'},
                         {name: '__actions'}
                     ];
                     break;
@@ -113,8 +113,7 @@ var vm = new Vue({
                         {name: '__actions'}
                     ];
                     break;
-            }
-
+            };
         },
         viewProfile: function (id) {
             console.log('view profile with id:', id)
@@ -171,7 +170,7 @@ var vm = new Vue({
         }
     },
     created: function () {
-        this.makeActive('job');
+        this.makeActive('company');
     }
 });
 
