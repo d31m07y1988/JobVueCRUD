@@ -84,9 +84,9 @@ var vm = new Vue({
                 case 'company':
                     this.dataget = 'ajax/companies';
                     this.columns = [
-                        {name: 'id', sortField: 'id'},
-                        {name: 'name', title: 'Название', sortField: 'name'},
-                        {name: 'inn', title: 'ИНН', sortField: 'inn'},
+                        {name: 'id'},
+                        {name: 'name', title: 'Название'},
+                        {name: 'inn', title: 'ИНН'},
                         {name: '__actions'}
                     ];
                     break;
